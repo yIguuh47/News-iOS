@@ -1,29 +1,33 @@
 import UIKit
 
+protocol NewsViewControllerProtocol {
+    func showError(errorMessage: String)
+    func showArticles(_ articles: [Article])
+}
+
 class NewsViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    var viewModel: ListNewsViewModel!
+    private var presenter: NewsPresenterProtocol?
+    private var interactor: NewsInteractorProtocol?
+    
+    private var articles: [Article] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        title = "News"
-        view.backgroundColor = .systemBackground
+        presenter = NewsPresenter(controller: self)
+        interactor = NewsInteractor(presenter: presenter!)
         
-        
-        viewModel = ListNewsViewModel(delegate: self)
-        viewModel.loadNews()
-        configTableView()
+        setupTableView()
+        interactor?.loadNews()
     }
     
-    func configTableView(){
-        DispatchQueue.main.async {
-            self.tableView.delegate = self
-            self.tableView.dataSource = self
-        }
+    func setupTableView(){
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
     }
 
 }
@@ -32,45 +36,43 @@ extension NewsViewController: UITableViewDelegate, UITableViewDataSource {
     
     // MARK: - Table
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.viewModel.count
+        return self.articles.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "customCell", for: indexPath) as! CustomCell
-        cell.setupCellCustom(model: self.viewModel.loadCurrentNews(indexPath: indexPath))
+        cell.setupCellCustom(model: self.articles[indexPath.row])
         return cell
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let new = self.viewModel.loadCurrentNews(indexPath: indexPath)
-        guard let url = URL(string: new.url) else { return }
+        let article = self.articles[indexPath.row]
+        guard let url = URL(string: article.url) else { return }
                 UIApplication.shared.open(url)
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    func loadData() {
-        self.viewModel.loadNews()
-    }
-    
 }
 
-extension NewsViewController: ListNewsViewModelProtocol {
-    func failure(error: ErrorHandler) {
+// MARK: - Return Request News
+extension NewsViewController: NewsViewControllerProtocol {
+    func showError(errorMessage: String) {
         DispatchQueue.main.async {
-            self.showAlert(title: error.title, message: error.errorDescription, titleBtn: "Ok")
+            self.showAlert(message: errorMessage)
         }
     }
     
-    func success() {
+    func showArticles(_ articles: [Article]) {
         DispatchQueue.main.async {
+            self.articles = articles
             self.tableView.reloadData()
         }
     }
     
-    private func showAlert(title: String?, message: String?, titleBtn: String?) {
+    private func showAlert(title: String = "Atenção", message: String) {
         DispatchQueue.main.async {
             let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: titleBtn, style: .default, handler: nil))
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
             self.present(alert, animated: true)
         }
     }

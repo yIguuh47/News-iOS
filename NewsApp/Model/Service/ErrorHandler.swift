@@ -1,5 +1,11 @@
 import Foundation
 
+enum CustomError: String , Error {
+    case loadDataResponse = "Error ao carregar dados"
+    case urlLoad = "Erro ao carregar URL"
+    case titleError = "Erro"
+}
+
 enum StatusCode: Int {
     case successRequest
     case badRequest
@@ -10,13 +16,6 @@ enum StatusCode: Int {
         case .badRequest: return 400..<500
         }
     }
-}
-
-enum ErrorDefault: String {
-    
-    case loadDataResponse = "Error ao carregar dados"
-    case urlLoad = "Erro ao carregar URL"
-    case titleError = "Erro"
 }
 
 protocol ErrorHandlerProtocol: LocalizedError {
