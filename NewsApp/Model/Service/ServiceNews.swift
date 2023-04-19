@@ -24,7 +24,7 @@ class ServiceNews {
                 return
             }
             
-            if (200...299).contains(_response.statusCode) {
+            if StatusCode.successRequest.range.contains(_response.statusCode) {
                 do {
                     let decoder = JSONDecoder()
                     let model = try decoder.decode(NewsModel.self, from: jsonData)

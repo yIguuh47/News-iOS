@@ -47,7 +47,7 @@ extension NewsViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let article = self.articles[indexPath.row]
-        guard let url = URL(string: article.url) else { return }
+        guard let url = URL(string: article.url ?? "") else { return }
                 UIApplication.shared.open(url)
         tableView.deselectRow(at: indexPath, animated: true)
     }

@@ -9,7 +9,7 @@ class NewsCellViewModel {
     }
     
     var photoUrl: URL? {
-        return URL(string: self.article.urlToImage)
+        return URL(string: self.article.urlToImage ?? "")
     }
     
     var title: String {
@@ -17,11 +17,11 @@ class NewsCellViewModel {
     }
     
     var description: String {
-        return self.article.description
+        return self.article.description ?? ""
     }
     
     var urlArticle: String {
-        return self.article.url
+        return self.article.url ?? ""
     }
     
 }
