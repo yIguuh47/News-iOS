@@ -13,6 +13,8 @@ class NewsViewController: UIViewController {
     private var interactor: NewsInteractorProtocol?
     
     private var articles: [Article] = []
+    var urlToDetails: String!
+    var router = NewsRouter()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,8 +49,10 @@ extension NewsViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let article = self.articles[indexPath.row]
-        guard let url = URL(string: article.url ?? "") else { return }
-                UIApplication.shared.open(url)
+        if let url = article.url {
+            self.urlToDetails = url
+            performSegue(withIdentifier: "newsDetailsViewController", sender: self)
+        }
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
@@ -77,4 +81,11 @@ extension NewsViewController: NewsViewControllerProtocol {
         }
     }
     
+}
+
+// MARK: - Navigation
+extension NewsViewController {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        router.passDataToNewsSomewhere(segue: segue, urlDetails: urlToDetails)
+    }
 }

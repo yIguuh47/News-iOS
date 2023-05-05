@@ -99,11 +99,40 @@
                     <navigationItem key="navigationItem" title="News" id="cDX-Jg-zh6"/>
                     <connections>
                         <outlet property="tableView" destination="6PL-2e-UCq" id="lNv-Gc-hbd"/>
+                        <segue destination="XzG-P3-xs9" kind="show" identifier="newsDetailsViewController" id="2BR-RK-QC4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1013.0434782608696" y="124.55357142857142"/>
+            <point key="canvasLocation" x="1033" y="125"/>
+        </scene>
+        <!--Tst-Router-->
+        <scene sceneID="7tU-JL-Xjl">
+            <objects>
+                <viewController id="XzG-P3-xs9" customClass="NewsDetailsViewController" customModule="NewsApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="TZw-cG-kdh">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wUK-X2-sav">
+                                <rect key="frame" x="0.0" y="92" width="414" height="770"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </webView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Ptk-gB-NKU"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Ptk-gB-NKU" firstAttribute="trailing" secondItem="wUK-X2-sav" secondAttribute="trailing" id="MJx-UP-bt8"/>
+                            <constraint firstItem="Ptk-gB-NKU" firstAttribute="bottom" secondItem="wUK-X2-sav" secondAttribute="bottom" id="f9d-A2-V3K"/>
+                            <constraint firstItem="wUK-X2-sav" firstAttribute="top" secondItem="Ptk-gB-NKU" secondAttribute="top" id="hLd-j2-hNn"/>
+                            <constraint firstItem="wUK-X2-sav" firstAttribute="leading" secondItem="Ptk-gB-NKU" secondAttribute="leading" id="xt0-Rk-Dhk"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Tst-Router" id="mZr-XS-Vwb"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zqQ-1N-wuC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1948" y="125"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="iVg-K1-O9M">
