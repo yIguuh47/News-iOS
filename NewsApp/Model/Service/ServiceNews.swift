@@ -4,7 +4,7 @@ private let apiURL = "https://newsapi.org/v2/top-headlines?sources=bbc-news&apiK
 
 class ServiceNews {
     
-    func requestTopSotries (onSuccess: @escaping ([Article]) -> Void, onFailure: @escaping (Error) -> Void) {
+    func requestTopStories (onSuccess: @escaping ([Article]) -> Void, onFailure: @escaping (Error) -> Void) {
         
         guard let api = URL(string: apiURL) else {
             onFailure(CustomError.urlLoad)

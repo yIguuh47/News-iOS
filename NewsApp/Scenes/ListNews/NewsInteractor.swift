@@ -21,7 +21,7 @@ class NewsInteractor: NewsInteractorProtocol {
     }
     
     func loadNews() {
-        service.requestTopSotries { articles in
+        service.requestTopStories { articles in
             self.presenter?.presenteArticles(articles)
         } onFailure: { error in
             self.presenter?.presenteError(errorMessage: error.localizedDescription)
